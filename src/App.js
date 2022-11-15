@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Heading, Form, Table } from "./components/index";
+import { useState } from "react";
+import { useGetUserQuery } from "./features/api";
 
 function App() {
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    gender: "",
+    isEligible: "",
+    isEditing: "",
+  });
+
+  const getUser = useGetUserQuery();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Heading title="Employee Data" />
+      <Form data={data} setData={setData} />
+      <Table setData={setData} getUser={getUser} />
     </div>
   );
 }
