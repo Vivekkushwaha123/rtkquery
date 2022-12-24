@@ -1,26 +1,56 @@
+import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+
 import "./App.css";
-import { Heading, Form, Table } from "./components/index";
-import { useState } from "react";
+import {
+  Login,
+  Register,
+  Form,
+  Table,
+  Navbar,
+  ViewBook,
+  IssueFrom,
+  IssuedBook,
+} from "./components/index";
 import { useGetUserQuery } from "./features/api";
 
 function App() {
-  const [data, setData] = useState({
-    name: "",
-    email: "",
-    phoneNumber: "",
-    gender: "",
-    isEligible: "",
-    isEditing: "",
-  });
+  const [isLoggined, setIsLoggined] = useState(
+    localStorage.getItem("login") ? true : false
+  );
 
+  const [data, setData] = useState({});
   const getUser = useGetUserQuery();
 
   return (
-    <div className="App">
-      <Heading title="Employee Data" />
-      <Form data={data} setData={setData} />
-      <Table setData={setData} getUser={getUser} />
-    </div>
+    <>
+      <BrowserRouter>
+        <Navbar isLoggined={isLoggined} />
+        <Routes>
+          <Route
+            exact
+            path="/addbook"
+            element={
+              <Form isLoggined={isLoggined} data={data} setData={setData} />
+            }
+          />
+          <Route
+            exact
+            path="/"
+            element={<Table setData={setData} getUser={getUser} />}
+          />
+          <Route
+            exact
+            path="/login"
+            element={<Login setIsLoggined={setIsLoggined} />}
+          />
+          <Route exact path="/viewbook" element={<ViewBook data={data} />} />
+          <Route exact path="/issuedbook" element={<IssuedBook />} />
+          <Route exact path="/issuebook" element={<IssueFrom />} />
+          <Route exact path="/register" element={<Register />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 

@@ -1,0 +1,20 @@
+[
+    {
+        "name": "email",
+        "type": "email",
+        "title": " Email",
+        "placeholder": "Enter Email"
+    },
+    {
+        "name": "password",
+        "type": "password",
+        "title": " Password",
+        "placeholder": "Enter Password"
+    },
+    {
+        "name": "confirm_password",
+        "type": "Password",
+        "title": "Confirm Password",
+        "placeholder": "Enter Confirm Password"
+    }
+]

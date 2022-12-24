@@ -1,9 +1,5 @@
-import React from "react";
-import Button from "./Button";
-
-import { useDeleteUserMutation } from "../features/api";
-import Heading from "./heading";
-import { useNavigate } from "react-router-dom";
+import { Button, Heading } from "./";
+import { useDeleteUserMutation, useGetBookQuery } from "../features/api";
 
 const style = {
   td: "p-1 border border-1 border-stone-900 text-center",
@@ -12,23 +8,18 @@ const style = {
 
 const tHeadArr = [
   "Sr.no",
+  "Enrollment Number",
   "Book Name",
-  "ISBN Number",
-  "Subject",
-  "Edition",
-  "Cost",
-  "View",
+  "Student Name",
+  "Issue Date",
+  "Return Date",
+  "Return",
 ];
 
-const Table = ({ setData, getUser }) => {
+const Table = () => {
   const [deleteUser] = useDeleteUserMutation();
-  const navigate = useNavigate();
 
-  const { data } = getUser;
-  const handleView = (ele) => {
-    setData(ele);
-    navigate("/viewbook");
-  };
+  const { data } = useGetBookQuery();
 
   const handleDelete = (id) => {
     deleteUser(id);
@@ -58,17 +49,17 @@ const Table = ({ setData, getUser }) => {
               return (
                 <tr key={ele.id}>
                   <td className={style.td}>{i + 1}</td>
+                  <td className={style.td}>{ele.roll_no}</td>
                   <td className={style.td}>{ele.book_name}</td>
-                  <td className={style.td}>{ele.isbn}</td>
-                  <td className={style.td}>{ele.subject}</td>
-                  <td className={style.td}>{ele.edition}</td>
-                  <td className={style.td}>{ele.cost}</td>
+                  <td className={style.td}>{ele.student_name}</td>
+                  <td className={style.td}>{ele.issue_date}</td>
+                  <td className={style.td}>{ele.return_date}</td>
 
                   <td className={style.td}>
                     <Button
-                      classStyle={style.btn + " bg-zinc-300"}
-                      btnName="View"
-                      handleFunction={() => handleView(ele)}
+                      classStyle={style.btn + " bg-red-300"}
+                      btnName="Return"
+                      handleFunction={() => handleDelete(ele.id)}
                     />
                   </td>
                 </tr>

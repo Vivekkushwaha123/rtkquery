@@ -10,6 +10,11 @@ export const userApi = createApi({
       providesTags: ["Users"],
     }),
 
+    getBook: builder.query({
+      query: () => "/books",
+      providesTags: ["Users"],
+    }),
+
     updateUser: builder.mutation({
       query: (user) => ({
         url: `/users/${user.id}`,
@@ -18,6 +23,7 @@ export const userApi = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
+
     addUser: builder.mutation({
       query: (user) => ({
         url: `/users/`,
@@ -27,9 +33,18 @@ export const userApi = createApi({
       invalidatesTags: ["Users"],
     }),
 
+    addBook: builder.mutation({
+      query: (book) => ({
+        url: `/books/`,
+        method: "POST",
+        body: book,
+      }),
+      invalidatesTags: ["Users"],
+    }),
+
     deleteUser: builder.mutation({
       query: (id) => ({
-        url: `/users/${id}`,
+        url: `/books/${id}`,
         method: "DELETE",
         body: id,
       }),
@@ -43,4 +58,6 @@ export const {
   useUpdateUserMutation,
   useGetUserQuery,
   useAddUserMutation,
+  useAddBookMutation,
+  useGetBookQuery,
 } = userApi;

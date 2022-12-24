@@ -1,7 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
 import { useAddUserMutation, useUpdateUserMutation } from "../features/api";
 
-import { Button, Input } from "../components/index";
+import { Button, Input, Heading } from "../components/index";
+import formInput from "../form.json";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   submitButton: "px-2 bg-indigo-500 p-1 my-1 rounded font-bold	",
@@ -9,91 +11,49 @@ const style = {
 };
 
 const Form = ({ data, setData }) => {
-  const { name, email, phoneNumber, gender, isEditing } = data;
+  const navigate = useNavigate();
 
   const [addUser] = useAddUserMutation();
   const [updateUser] = useUpdateUserMutation();
 
   const handleChange = (e) => {
-    const { name, value, checked } = e.target;
-    checked && name === "isEligible"
-      ? setData({ ...data, isEligible: "Checked" })
-      : !checked && name === "isEligible"
-      ? setData({ ...data, isEligible: "Not Checked" })
-      : setData({ ...data, [name]: value });
+    const { name, value } = e.target;
+    setData({ ...data, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addUser({ ...data, id: uuidv4(), isEditing: false });
+    addUser({ ...data, id: uuidv4() });
     document.getElementById("form").reset();
-  };
-
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    updateUser({ ...data, isEditing: false });
-    document.getElementById("form").reset();
+    navigate("/");
   };
 
   return (
-    <div className=" my-10 flex justify-center items-center">
-      <form action="" id="form" className="border py-5 px-10">
-        <Input
-          title="Name"
-          name="name"
-          type="text"
-          value={name}
-          isEditing={isEditing}
-          handleClick={handleChange}
+    <div className="  flex flex-col justify-center items-center w-full ">
+      <Heading title={"Add Book"} />
+      <form
+        action=""
+        id="form"
+        className="border border-black rounded-lg w-5/6 py-5 px-10"
+      >
+        {formInput.map((obj, i) => {
+          return (
+            <Input
+              key={obj.name + i}
+              title={obj.title}
+              name={obj.name}
+              type={obj.type}
+              value={data[obj.name]}
+              handleClick={handleChange}
+            />
+          );
+        })}
+
+        <Button
+          btnName="Submit"
+          classStyle={style.submitButton}
+          handleFunction={handleSubmit}
         />
-        <Input
-          title="Email"
-          name="email"
-          type="email"
-          value={email}
-          isEditing={isEditing}
-          handleClick={handleChange}
-        />
-        <Input
-          title="Phone Number"
-          name="phoneNumber"
-          type="number"
-          value={phoneNumber}
-          isEditing={isEditing}
-          handleClick={handleChange}
-        />
-        <Input
-          className="my-1"
-          title="Gender"
-          name="gender"
-          type="radio"
-          male="Male"
-          female="Female"
-          value={gender}
-          isEditing={isEditing}
-          handleClick={handleChange}
-        />
-        <Input
-          title="Are you above 18"
-          type="checkbox"
-          name="isEligible"
-          id="checkbox"
-          isEditing={isEditing}
-          handleClick={handleChange}
-        />
-        {!isEditing ? (
-          <Button
-            btnName="Submit"
-            classStyle={style.submitButton}
-            handleFunction={handleSubmit}
-          />
-        ) : (
-          <Button
-            btnName="Update"
-            classStyle={style.updateButton}
-            handleFunction={handleUpdate}
-          />
-        )}
       </form>
     </div>
   );

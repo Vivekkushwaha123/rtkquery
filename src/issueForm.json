@@ -1,0 +1,27 @@
+[
+    {
+        "name": "roll_no",
+        "type": "number",
+        "title": "Enrollment Number"
+    },
+    {
+        "name": "book_name",
+        "type": "text",
+        "title": "Book Name"
+    },
+    {
+        "name": "student_name",
+        "type": "text",
+        "title": "Student Name"
+    },
+    {
+        "name": "issue_date",
+        "type": "date",
+        "title": "Issue Date"
+    },
+    {
+        "name": "return_date",
+        "type": "date",
+        "title": "Return Date"
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "type": "text",
+        "name": "book_name",
+        "title": "Book Name"
+    },
+    {
+        "type": "text",
+        "name": "isbn",
+        "title": "ISBN"
+    },
+    {
+        "type": "text",
+        "name": "author_name",
+        "title": "Author Name"
+    },
+    {
+        "type": "text",
+        "name": "subject",
+        "title": "Subject"
+    },
+    {
+        "type": "number",
+        "name": "edition",
+        "title": "Edition"
+    },
+    {
+        "type": "number",
+        "name": "cost",
+        "title": "Cost"
+    }
+]
